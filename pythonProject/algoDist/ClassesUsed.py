@@ -1,6 +1,3 @@
-import mailbox
-
-
 class AbstractMessage:
     def __init__(self, payload, timestamp, sender, receiver):
         self.payload = payload
@@ -8,7 +5,14 @@ class AbstractMessage:
         self.sender = sender
         self.receiver = receiver
 
-        def
+    def get_payload(self):
+        return self.payload
+    def get_timestamp(self):
+        return self.timestamp
+    def get_sender(self):
+        return self.sender
+    def get_receiver(self):
+        return self.receiver
 
 class Mailbox:
     def __init__(self):
