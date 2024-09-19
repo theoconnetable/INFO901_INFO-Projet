@@ -3,17 +3,15 @@ from ClassesUsed import AbstractMessage
 from algoDist.ClassesUsed import Mailbox
 from pyeventbus3.pyeventbus3 import *
 
-
 class Com:
 
     nb_process_created = 0
 
     def __init__(self):
         ## Definition nombre de processus
-        #self.np_process = np_process TODO: supprime ce comment
         self.myId = Com.nb_process_created
         Com.nb_process_created += 1
-
+        PyBus.Instance().register(self, self)
         # Horloge de Lamport et Sémaphore pour protéger son accès
         self.lamport_clock = 0
         self.semaphore = threading.Semaphore()
@@ -46,9 +44,11 @@ class Com:
     @subscribe(threadMode=Mode.PARALLEL, onEvent=AbstractMessage)
     def receive(self, o):
         message_received = o
-        self.lamport_clock = max(self.lamport_clock, message_received.timestamp)
-        self.inc_clock()
-        self.mailbox.add_message(message_received)
-        print(str(self.myId) + "a recu un message!")
+        if message_received.get_receiver() == self.myId:
+            print(str(self.myId) + " a recu un message avec timestamp: " + str(message_received.get_timestamp()))
+            self.lamport_clock = max(self.lamport_clock, message_received.timestamp)
+            self.inc_clock()
+            self.mailbox.add_message(message_received)
+
 
 

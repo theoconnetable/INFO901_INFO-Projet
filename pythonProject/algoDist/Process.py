@@ -22,8 +22,11 @@ class Process(Thread):
             sleep(1)
 
             if self.getName() == "P0":
+                print(self.getName() + " broadcast un message")
+                self.com.send_to("bonjour à tous", 1)
+            if self.getName() == "P1":
                 print(self.getName() + " envoie un message")
-                self.com.send_to("j'appelle 2 et je te recontacte après", 1)
+                self.com.send_to("j'appelle 3 et je te recontacte après", 2)
 
     def waitStopped(self):
         self.join()
