@@ -1,4 +1,6 @@
 
 /pythonProject/.idea
 /pythonProject/algoDist/__pycache__
-/pythonProject
+/pythonProject/algoDist/Lib/site-packages
+pythonProject/algoDist/pyvenv.cfg
+/pythonProject/algoDist/Scripts
