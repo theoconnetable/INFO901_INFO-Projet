@@ -28,3 +28,7 @@ class Mailbox:
         message = self.mailbox.pop(0)
         return message
 
+class Token:
+    def __init__(self):
+        self.token_holder = None
+

@@ -1,4 +1,4 @@
-import threading
+from threading import Thread, Lock, Condition
 from ClassesUsed import AbstractMessage
 from algoDist.ClassesUsed import Mailbox
 from pyeventbus3.pyeventbus3 import *
@@ -16,6 +16,11 @@ class Com:
         self.lamport_clock = 0
         self.semaphore = threading.Semaphore()
         self.mailbox = Mailbox()
+        self.token = None
+        self.lock = Lock()
+        self.condition = Condition(self.lock)
+        self.request_SC = False
+        self.has_token = (self.myId == 0)
 
     def get_nb_process(self):
         return self.nb_process_created
@@ -49,6 +54,13 @@ class Com:
             self.lamport_clock = max(self.lamport_clock, message_received.timestamp)
             self.inc_clock()
             self.mailbox.add_message(message_received)
+
+    def request_sc(self):
+        with self.lock:
+            self.request_SC = True
+            if not self.has_token:
+                print(f"Processus {self.myId} attend le jeton pour entrer en SC")
+                self.condition.wait()
 
 
 
