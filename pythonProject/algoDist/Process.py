@@ -15,7 +15,7 @@ class Process(Thread):
         self.myId = Process.nbProcessCreated
         Process.nbProcessCreated += 1
         self.com = Com(self.myId, Process.nb_proccess)
-        self.nbProcess = self.com.get_nb_process()
+        self.nbProcess = Process.nbProcessCreated
         self.setName(name)
         self.alive = True
         self.start()
