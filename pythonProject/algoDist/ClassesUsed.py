@@ -30,5 +30,9 @@ class Mailbox:
 
 class Token:
     def __init__(self):
-        self.token_holder = None
+        self.active = True
 
+class MessageToken:
+    def __init__(self, token, receiver):
+        self.token = token
+        self.receiver = receiver
